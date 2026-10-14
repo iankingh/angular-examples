@@ -2,12 +2,12 @@
 
 本指南記錄把舊版（Angular 5–12）子專案遷移到 **Angular 22（standalone、zoneless 預設、Vitest）** 的標準步驟。最初的 pilot 現已整併至 `advanced/`；遷移時曾驗證 build + test 全綠。
 
-> **後續更新**：原 16 個子專案已合併為「每個分類一個 Angular 專案」（`forms/`、`routing/`、`material-ui/`、`http/`、`advanced/`、`features/`、`testing/` 各自為一個專案）。各 demo 以 lazy route 形式整合進同一 app。2026-10-05 已在 Node 22.22.3 重驗目前 Angular 22.2.1 的全部 7 個 production builds、184 unit tests 與 7 Cypress browser tests（welcome 3 + demo controls 4）全綠。現況結構、執行方式與環境限制見根 [`README.md`](../README.md)。下方步驟仍為遷移當時的歷史記錄。
+> **後續更新**：原 16 個子專案已合併為「每個分類一個 Angular 專案」（`forms/`、`routing/`、`material-ui/`、`http/`、`advanced/`、`features/`、`testing/` 各自為一個專案）。各 demo 以 lazy route 形式整合進同一 app。2026-10-05 已在 Node 22.22.3 重驗當時 Angular 22.2.1 的全部 7 個 production builds、184 unit tests 與 7 Cypress browser tests（welcome 3 + demo controls 4）全綠。現況結構、依賴版本、執行方式與環境限制見根 [`README.md`](../README.md)。下方步驟仍為遷移當時的歷史記錄。
 
 ## 0. 環境
 - Node：**必須 v22.22+ / v24.15+ / v26+**（系統 `node -v` 為 v26.5.0 即可；舊 nvm 的 v20 不可用於 Angular 22）。
-- Angular CLI 22 全域：`npm install -g @angular/cli@22`。
-- 驗證：`ng version` 顯示 Angular CLI 22.x。
+- Angular CLI 由各子專案的 lockfile 固定，不需全域安裝。
+- 在子專案安裝依賴後使用 `npm exec ng version` 驗證 CLI 版本。
 
 ## 1. Scaffold 新專案（取代舊目錄）
 在對應分類目錄下，先移除舊專案資料夾，再 scaffold：
@@ -15,13 +15,13 @@
 ```bash
 # 假設在 <category>/ 目錄下，舊專案名為 <name>
 rm -rf <name>
-ng new <name> --zoneless --routing --style=css --ssr=false \
+npm exec -- ng new <name> --zoneless --routing --style=css --ssr=false \
   --test-runner=vitest --skip-git --package-manager=npm --defaults
 ```
 
 關鍵旗標：
 - `--zoneless`：Angular 22 zoneless 為預設；`app.config.ts` 不需 `provideZonelessChangeDetection()`，也不會安裝 `zone.js`。
-- `--test-runner=vitest`：自動用 `@angular/build:unit-test` builder + Vitest 4 + jsdom。
+- `--test-runner=vitest`：自動用 `@angular/build:unit-test` builder + Vitest + jsdom。
 - `--standalone` 預設為 true，無需 NgModule。
 
 > Angular 22 的 scaffold 命名慣例**已移除 `.component` 副檔名**：根元件為 `app.ts` / `App`。本專案統一慣例：component 檔名去 `.component`、class 名為單字（`HeroForm`、`ReactiveForm`）；validator 函式保留 `.validator.ts`；directive 保留 `.directive.ts` 以避免與 validator 函式混淆。
@@ -55,8 +55,8 @@ ng new <name> --zoneless --routing --style=css --ssr=false \
 
 ## 4. 驗證（每個子專案收尾前必跑）
 ```bash
-ng build   # 必須無錯
-ng test    # 必須全綠
+npm run build                    # 必須無錯
+npm test -- --watch=false        # 必須全綠
 ```
 兩者皆過才標記 todo 為 done。
 

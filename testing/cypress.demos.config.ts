@@ -1,7 +1,6 @@
 import { defineConfig } from 'cypress';
 
 export default defineConfig({
-  allowCypressEnv: false,
   e2e: {
     specPattern: 'cypress/demos/**/*.spec.ts',
     supportFile: 'cypress/support/e2e.ts',

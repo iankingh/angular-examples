@@ -18,7 +18,7 @@ npm test      # Vitest（5 tests）
 npm run e2e   # 先 ng serve :4200 再跑 Cypress
 ```
 
-2026-10-05 以 Node 22.22.3、Cypress 15.19.0、Electron 138 headless 驗證：上述 welcome 3 tests 全綠。
+2026-10-07 以 Node 26.5.0、Cypress 16.1.1、Electron 146 headless 驗證：上述 welcome 3 tests 全綠。Cypress 已標示 Electron 為 deprecated，未來需改用支援的瀏覽器。
 
 ### 跨 demo 控制項 regression tests
 
@@ -43,7 +43,7 @@ node node_modules/typescript/bin/tsc --noEmit -p cypress/tsconfig.json
 npm run cy:run -- --config-file cypress.demos.config.ts
 ```
 
-2026-10-05 上述 4 tests 全綠，測試範圍：
+2026-10-07 上述 4 tests 全綠，測試範圍：
 
 - QR：以 `@zxing/library` 的 `QRCodeWriter` 產生的 `FLEET-QR` matrix fixture 畫在 canvas，透過真正的 `MediaStream` / `<video>` 與 ZXing 解碼；測試 Start、Try harder、裝置切換、Stop、Clear result、離頁停止 tracks，以及 mock 的 torch constraints / 權限拒絕。不存取實體攝影機，不驗證硬體 torch。
 - Material：四個正確的 icon ligatures 與實際載入的 Material Icons 字型；此項需能連線 Google Fonts，尚非離線自包含。

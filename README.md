@@ -16,9 +16,9 @@ Angular 學習範例集。根目錄下的每個分類都是可獨立安裝、執
 
 ## 技術棧 / Stack
 
-- Angular `22.2.x`、Angular CLI `22.2.x`
+- Angular `22.2.1`、Angular CLI / build `22.2.2`
 - TypeScript `~6.0.2`、RxJS `~7.8`
-- Vitest `4.x`；`testing/` 另使用 Cypress `15.x`
+- Vitest `5.x`、jsdom `30.x`；`testing/` 另使用 Cypress `16.x`
 - Angular Material `22.x`（`forms/`、`material-ui/`）
 - Bootstrap `5.3.x`（`features/`）
 
@@ -69,7 +69,7 @@ npm run cy:open
 ## 測試狀態與限制 / Status
 
 - 目前共有 184 個 Vitest unit tests；`testing/` 另有 3 個 Cypress E2E tests。
-- 2026-10-05 使用 Node **22.22.3** / npm **10.9.8** 驗證目前的 Angular 22.2.1 依賴：7 個 production builds 與 184 個 unit tests 全綠；Cypress 15.19.0 / Electron 138 headless 的 welcome 3 tests 與 demo controls 4 tests 皆通過。此結果不代表重新驗證 Node 26 的所有 build。
+- 2026-10-07 使用 Node **26.5.0** / npm **12.1.0** 驗證更新後依賴：7 個 production builds、184 個 unit tests，以及 Cypress 16.1.1 的 welcome 3 tests 和跨 demo controls 4 tests 全綠。兩組 Cypress 在 Electron 146 headless 執行；Cypress 已標示 Electron 為 deprecated，未來需換支援的瀏覽器。
 - demo controls 瀏覽器測試涵蓋 QR 真實 ZXing 解碼（合成 canvas 攝影機）、切換裝置／torch constraints／停止與離頁清理、權限拒絕、Material Icons 字型載入，以及 resolver 導覽 spinner／同 URL 導覽。執行方式見 [`testing/README.md`](testing/README.md)。
 - QR 測試不需實體攝影機，但硬體攝影機權限、真正的 torch 與其他瀏覽器仍需人工驗收；Material Icons 字型由 Google Fonts 載入，該瀏覽器測試需要網路。
 - `http/` 的 UI 不會自動啟動 API server。
