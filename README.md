@@ -1,4 +1,4 @@
-# Angular Demo Collection
+# angular-examples
 
 Angular 學習範例集。根目錄下的每個分類都是可獨立安裝、執行與測試的 Angular 22 專案；各專案採 standalone components、zoneless change detection 與 Vitest。
 
